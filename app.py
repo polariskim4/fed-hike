@@ -11,7 +11,7 @@ st.markdown("""
 - **계산 구간:** 금리 인상 시작 3개월 전 ~ 금리 인상 종료 3개월 전
 """)
 
-# 데이터 정의 (티커 추가 및 오타 수정)
+# 데이터 정의
 data = {
     "2022.03 ~ 2023.07 (인플레이션 파이터)": {
         "stats": "16개월간 총 11회, 525bp 인상 (0.25% → 5.50%)",
@@ -153,7 +153,7 @@ data = {
             {"종목": "Oracle", "티커": "ORCL", "수익률": 212.1, "섹터": "Technology"},
             {"종목": "JDS Uniphase", "티커": "JDSU", "수익률": 195.4, "섹터": "Technology"},
             {"종목": "Cisco", "티커": "CSCO", "수익률": 122.4, "섹터": "Technology"},
-            {"종목": "Intel", "티커": "INTC", "수익률": 85.2, "섹터": "Technology"}, # 섹_터 오타 수정됨
+            {"종목": "Intel", "티커": "INTC", "수익률": 85.2, "섹터": "Technology"},
             {"종목": "Microsoft", "티커": "MSFT", "수익률": 42.1, "섹터": "Technology"},
             {"종목": "Adobe", "티커": "ADBE", "수익률": 38.4, "섹터": "Technology"},
             {"종목": "Amgen", "티커": "AMGN", "수익률": 35.1, "섹터": "Healthcare"},
@@ -189,6 +189,7 @@ data = {
             {"종목": "Schlumberger", "티커": "SLB", "수익률": 18.2, "섹터": "Energy"},
         ],
         "Nasdaq 100": [
+            {"종목": "Applied Materials", "티커": "AMAT", "수익률": 85.2, "섹터": "Technology"},
             {"종목": "Intel", "티커": "INTC", "수익률": 25.1, "섹터": "Technology"},
             {"종목": "Microsoft", "티커": "MSFT", "수익률": 21.4, "섹터": "Technology"},
             {"종목": "Oracle", "티커": "ORCL", "수익률": 18.5, "섹터": "Technology"},
@@ -196,7 +197,6 @@ data = {
             {"종목": "Cisco", "티커": "CSCO", "수익률": 12.8, "섹터": "Technology"},
             {"종목": "Novell", "티커": "NOVL", "수익률": 10.5, "섹터": "Technology"},
             {"종목": "Apple", "티커": "AAPL", "수익률": 8.4, "섹터": "Technology"},
-            {"종목": "Applied Materials", "티커": "AMAT", "수익률": 85.2, "섹터": "Technology"},
             {"종목": "Cascade", "티커": "CSCC", "수익률": 7.2, "섹터": "Technology"},
             {"종목": "Adobe", "티커": "ADBE", "수익률": 5.1, "섹터": "Technology"},
         ],
@@ -231,8 +231,13 @@ cols = st.columns(len(indices))
 for i, index_name in enumerate(indices):
     with cols[i]:
         st.subheader(f"🏆 {index_name}")
-        # 데이터프레임 생성 시 컬럼 순서 지정: 종목 -> 티커 -> 수익률 -> 섹터
         df = pd.DataFrame(data[period][index_name])
+        
+        # [수정 사항] 수익률 기준 내림차순으로 강제 정렬
+        # 데이터 입력 순서와 상관없이 항상 수익률이 높은 종목이 상단에 위치하도록 보장합니다.
+        df = df.sort_values(by="수익률", ascending=False).reset_index(drop=True)
+        
+        # 컬럼 순서 보장
         df = df[["종목", "티커", "수익률", "섹터"]]
         
         # 수익률 포맷팅 (소수점 한자리) 및 오른쪽 정렬
