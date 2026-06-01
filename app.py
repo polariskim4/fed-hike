@@ -191,7 +191,7 @@ data = {
         "Nasdaq 100": [
             {"종목": "Intel", "티커": "INTC", "수익률": 25.1, "섹터": "Technology"},
             {"종목": "Microsoft", "티커": "MSFT", "수익률": 21.4, "섹터": "Technology"},
-            {"종목": "Oracle", "티커": "ORCL", "수익률": 18.5, "티커": "Technology"},
+            {"종목": "Oracle", "티커": "ORCL", "수익률": 18.5, "섹터": "Technology"},
             {"종목": "Amgen", "티커": "AMGN", "수익률": 15.2, "섹터": "Healthcare"},
             {"종목": "Cisco", "티커": "CSCO", "수익률": 12.8, "섹터": "Technology"},
             {"종목": "Novell", "티커": "NOVL", "수익률": 10.5, "섹터": "Technology"},
